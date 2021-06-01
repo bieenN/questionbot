@@ -1,0 +1,18 @@
+[
+  {
+    "question": "What day is today?",
+    "answer": "Monday"
+  },
+  {
+    "question": "What is the weather like today?",
+    "answer": "Same as yesterday."
+  },
+  {
+    "question": "Will the weather be sunny today?",
+    "answer": "Maybe."
+  },
+  {
+    "question": "Did it snow yesterday?",
+    "answer": "No."
+  }
+]
