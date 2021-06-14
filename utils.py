@@ -1,6 +1,5 @@
 import re
 
-
 def strip_punctuation(text):
     """replaces non-word characters by space characters"""
     return re.sub(r'\W', ' ', text)
