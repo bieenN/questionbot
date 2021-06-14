@@ -23,3 +23,4 @@ def jaccard_similarity_score(items1, items2):
     union = set(items1) | set(items2)
     return len(intersection)/len(union) if union else 0.0
 
+
