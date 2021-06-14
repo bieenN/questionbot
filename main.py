@@ -19,8 +19,30 @@ class MatchingEngine:
         self.faq_dict = faq_dict
 
     def get_candidate(self):
-        pass
+        computable_user_question = self.format_question(self.user_question)
+        total_faq_questions = len(self.faq_dict)
+        
+        question_increment = 0
 
+        #List to store jaccard similarity scores of each question relating to the user question
+        jaccard_similarity_score_list = []
+    
+        while question_increment < total_faq_questions:
+            computable_faq_question = self.format_question(self.faq_dict[question_increment]['question'])
+
+            jaccard_similarity_score_list.append(utils.jaccard_similarity_score(computable_user_question, computable_faq_question))
+
+            question_increment += 1
+
+        highest_similarity_score = max(jaccard_similarity_score_list)
+        candidate_question = [highest_similarity_score, jaccard_similarity_score_list.index(highest_similarity_score)]
+        
+        #Return the candidate using a candidate object along with the score stored in the candidate_question variable
+        return Candidate(self.faq_dict[candidate_question[1]]['question'], self.faq_dict[candidate_question[1]]['answer']), candidate_question[0]
+
+    def format_question(self, question):
+        return utils.words_to_lowercase(utils.text_to_words(utils.strip_punctuation(question)))
+        
 class Candidate:
     def __init__(self, question, answer):
         self.question = question
@@ -46,7 +68,6 @@ def main(candidates_path, questions_log_path):
     
     client = InteractiveConsoleClient(manager)
     client.run()
-
 
 if __name__ == '__main__':
     main("faq.json", "asked_questions_log.txt")
