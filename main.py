@@ -6,12 +6,12 @@ class QuestionHandler:
     def __init__(self, candidates_path, questions_log_path):
 
         # Initalise access components
-        self.CatalogAccess = CatalogAccess(candidates_path)
+        self.CatelogAccess = CatelogAccess(candidates_path)
 
         self.LogAccess = LogAccess(questions_log_path)
 
     def answer_question(self, question_text):
-        faq_dict = self.CatalogAccess.retrieve_faq()
+        faq_dict = self.CatelogAccess.retrieve_faq()
 
         self.LogAccess.log_question(question_text)
 
@@ -53,7 +53,7 @@ class Candidate:
         self.answer = answer
 
 #write check to make sure question is longer than 1 word
-class CatalogAccess:
+class CatelogAccess:
     def __init__(self, candidates_path):
         self.candidastes_path = candidates_path
 
