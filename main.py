@@ -4,6 +4,7 @@ import utils
 
 class QuestionHandler:
     def __init__(self, candidates_path, questions_log_path):
+
         # Initalise access components
         self.CatalogAccess = CatalogAccess(candidates_path)
 
@@ -11,6 +12,9 @@ class QuestionHandler:
 
     def answer_question(self, question_text):
         faq_dict = self.CatalogAccess.retrieve_faq()
+
+        self.LogAccess.log_question(question_text)
+
         return MatchingEngine(question_text, faq_dict).get_candidate()
 
 class MatchingEngine:
@@ -53,7 +57,21 @@ class CatalogAccess:
     def __init__(self, candidates_path):
         self.candidastes_path = candidates_path
 
-        self.faq_file_json = json.load(open('faq.json', 'r'))
+        self.faq_file_json = json.load(open(self.candidastes_path, 'r'))
+
+        self.clean_faq_list()
+
+    def clean_faq_list(self):
+
+        faq_question_list = []
+
+        #Add questions to a list then filter out any questions where the word counts is less than 2
+        for faq_question in self.faq_file_json:
+            faq_question_list.append(utils.text_to_words(faq_question['question']))
+            
+        for question_increment, faq_question in enumerate(faq_question_list):
+            if len(faq_question) < 2:
+                del self.faq_file_json[question_increment]
 
     def retrieve_faq(self):
         return self.faq_file_json
@@ -62,6 +80,10 @@ class LogAccess:
     def __init__(self, questions_log_path):
         self.questions_log_path = questions_log_path
 
+    def log_question(self, question_text):
+        self.asked_questions_file = open(self.questions_log_path, 'a')
+        self.asked_questions_file.write(question_text + "\n")
+        self.asked_questions_file.close()
 
 def main(candidates_path, questions_log_path):
     manager = QuestionHandler(candidates_path, questions_log_path)
@@ -71,5 +93,3 @@ def main(candidates_path, questions_log_path):
 
 if __name__ == '__main__':
     main("faq.json", "asked_questions_log.txt")
-
-
