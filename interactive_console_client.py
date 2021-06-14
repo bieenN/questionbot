@@ -22,6 +22,7 @@ class InteractiveConsoleClient:
         return question
 
     def _answer_question(self, question_text):
+        print(question_text)
         candidate, _score = self.manager.answer_question(question_text)
         if candidate:
             self._show_answer(candidate)
