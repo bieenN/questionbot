@@ -42,3 +42,4 @@ class InteractiveConsoleClient:
     QUESTION_PROMPT = "\nPlease enter a question, and press the ENTER key: "
     NO_ANSWER_MESSAGE = "I cannot answer this."
     ANSWER_TEMPLATE = "I think that you asked '{question}' and conclude that the answer is '{answer}'."
+
