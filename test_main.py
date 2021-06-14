@@ -27,6 +27,7 @@ def faq_dict(manager):
     faq_dict = manager.CatelogAccess.retrieve_faq()
     return faq_dict
 
+#Testing Fixtures for different questions
 @pytest.fixture
 def question_input_scenario1(faq_dict):
     question_text = "What is the weather today?"
@@ -47,6 +48,7 @@ def question_input_scenario4(faq_dict):
     question_text = "123123123 ASHDJASDK @&*(&!@#*(&!@*(# HAJSKDJKASHKDJHZXJHCH(&#*$# ZJNXCN12yu-@H#HASd`"
     return MatchingEngine(question_text, faq_dict)
 
+#Fixture Tests
 def test_question_scenario1(question_input_scenario1):
     Engine = question_input_scenario1
     candidate, score = Engine.get_candidate()
